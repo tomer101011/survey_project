@@ -1,0 +1,56 @@
+.header-style {
+    font-size: 1.4rem;
+    font-weight: 300;
+}
+
+.sub-header {
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: bold;
+    padding-top: 10px;
+    color: royalblue;
+}
+
+.link-style {
+    font-size: 1.3rem;
+    font-weight: 300;
+    background: none;
+    border: none;
+    color: #007bff;
+    outline: none !important;
+}
+
+.link-style:hover {
+    text-decoration: underline;
+}
+
+#disc-style {
+    font-size: 1.1rem;
+}
+
+.coupon-style {
+    margin-top: 7.5px;
+    margin-bottom: 7.5px;
+    background-color: #4472b9;
+    color: white;
+    border-radius: 30px;
+    border: none;
+    outline: none !important;
+    padding: 5px 15px 5px 15px;
+    transition: all .1s ease-in-out;
+}
+
+.coupon-style:hover {
+    background-color: #3dbedf;
+    color: black;
+}
+
+#style-disabled {
+    background-color: #4ca454;
+    color: white;
+}
+
+.style-role {
+    color: green;
+    font-weight: bold;
+}

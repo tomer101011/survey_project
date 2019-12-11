@@ -1,0 +1,39 @@
+.padding-table {
+    padding-right: 20px;
+    padding-top: 6.5px;
+}
+
+.autoBr {
+    word-break: break-all;
+}
+
+#boxSurvey {
+    width: 100%;
+    margin-left: 20px;
+    margin-top: 40px;
+}
+
+input[type=radio] {
+    width: 15px;
+    height: 15px;
+}
+
+select {
+    margin-bottom: 1em;
+    padding: .25em;
+    border: 0;
+    border-bottom: 2px solid green;
+    font-weight: bold;
+    letter-spacing: .15em;
+    border-radius: 0;
+}
+
+select:focus,
+:active {
+    outline: 0;
+}
+
+option {
+    color: green;
+    font-weight: bold;
+}
