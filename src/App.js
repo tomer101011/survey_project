@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './App.css';
-import { HashRouter as Router, Route } from 'react-router-dom';
+import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import LoginPage from './components/LoginPage';
 import UserPage from './components/UserPage';
 import UserInfo from './components/UserInfo';
@@ -74,7 +74,7 @@ export default class App extends Component {
       <div>
         <Router>
 
-          <switch>
+          <Switch>
             <Route exact path={ROUTES.LOGIN} render={(props) => <LoginPage {...props} users={this.state.users} />} />
             <Route exact path={ROUTES.USER} render={(props) => <UserPage {...props} users={this.state.users} />} />
             <Route exact path={ROUTES.USER_INFO} render={(props) => <UserInfo {...props} users={this.state.users} updateUser={this.updateUser} />} />
@@ -82,7 +82,7 @@ export default class App extends Component {
             <Route exact path={ROUTES.SURVEYPAGE} render={(props) => <SurveyPage {...props} users={this.state.users} surveys={this.state.surveys} pushCompletedSurvey={this.pushCompletedSurvey} findSurveyIdInCompletedArr={this.findSurveyIdInCompletedArr} />} />
             <Route exact path={ROUTES.COUPONPAGE} render={(props) => <CouponPage {...props} users={this.state.users} />} />
             <Route exact path={ROUTES.ADMIN} render={(props) => <AdminPage {...props} users={this.state.users} />} />
-          </switch>
+          </Switch>
 
         </Router>
       </div>
