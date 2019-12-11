@@ -73,7 +73,8 @@ export default class App extends Component {
     return (
       <div>
         <Router>
-          <div>
+
+          <switch>
             <Route exact path={ROUTES.LOGIN} render={(props) => <LoginPage {...props} users={this.state.users} />} />
             <Route exact path={ROUTES.USER} render={(props) => <UserPage {...props} users={this.state.users} />} />
             <Route exact path={ROUTES.USER_INFO} render={(props) => <UserInfo {...props} users={this.state.users} updateUser={this.updateUser} />} />
@@ -81,7 +82,8 @@ export default class App extends Component {
             <Route exact path={ROUTES.SURVEYPAGE} render={(props) => <SurveyPage {...props} users={this.state.users} surveys={this.state.surveys} pushCompletedSurvey={this.pushCompletedSurvey} findSurveyIdInCompletedArr={this.findSurveyIdInCompletedArr} />} />
             <Route exact path={ROUTES.COUPONPAGE} render={(props) => <CouponPage {...props} users={this.state.users} />} />
             <Route exact path={ROUTES.ADMIN} render={(props) => <AdminPage {...props} users={this.state.users} />} />
-          </div>
+          </switch>
+
         </Router>
       </div>
     )
