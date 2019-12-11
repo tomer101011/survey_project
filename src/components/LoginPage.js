@@ -25,11 +25,11 @@ export default class LoginPage extends Component {
                                 <h1 className="new-display-4">Login Page</h1>
                             </div>
                         </div>
-                        {/* <div className="row">
+                        <div className="row">
                             <div className="col-12">
                                 <img onClick={() => this.login()} className="img-style" title="Login" src={require(`../pictures/surveyPic.jpg`)} alt="" />
                             </div>
-                        </div> */}
+                        </div>
                         <div className="row margin-top">
                             <div className="col-12">
                                 <input id="userName" onChange={this.setUserName} className="inputStyle" type="text" placeholder="User Name" />
