@@ -27,6 +27,7 @@ export default class App extends Component {
         new User('ram', '4321', 'bbbb@walla.com', 'User'),
         new User('jon', '1111', 'cccc@gmail.com', 'Admin')
       ],
+
       surveys: [
         new Survey(0, 'bla bla', 'Bedroom',
           [new Question('are this better?', ['one', 'two', 'three']),
@@ -41,7 +42,6 @@ export default class App extends Component {
           new Question('bb', ['four', 'five', 'six']),
           new Question('ccc', ['four', 'five', 'six'])])
       ],
-
 
       categories: ['Bedroom', 'Bathroom']
     }
