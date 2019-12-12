@@ -12,6 +12,7 @@ export default class UserPage extends Component {
             changePage: false
         }
     }
+
     render() {
         return (
             <div className="container">
@@ -28,7 +29,7 @@ export default class UserPage extends Component {
                         </div>
                         <div className="row">
                             <div className="col-12">
-                                <h1 className="new-display-4">Welcome {this.props.users[this.state.loggedUserIndex].user}</h1>
+                                <h1 className="new-display-4">Welcome {this.props.users[this.state.loggedUserIndex].firstName} {this.props.users[this.state.loggedUserIndex].lastName}</h1>
                             </div>
                         </div>
                         <div className="row">
@@ -72,6 +73,11 @@ export default class UserPage extends Component {
         )
     }
 
+    doRedirect = () => {
+        if (this.state.changePage)
+            return <Redirect to={this.state.path} />
+    }
+
     changePathToGo = (newPath) => {
         this.setState({ path: newPath, changePage: true });
     }
@@ -84,12 +90,5 @@ export default class UserPage extends Component {
 
         this.changePathToGo(ROUTES.ALLSURVEYS);
 
-    }
-
-
-
-    doRedirect = () => {
-        if (this.state.changePage)
-            return <Redirect to={this.state.path} />
     }
 }

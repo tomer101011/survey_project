@@ -8,6 +8,7 @@ import AllSurveysPage from './components/AllSurveysPage';
 import SurveyPage from './components/SurveyPage';
 import CouponPage from './components/CouponPage';
 import AdminPage from './components/AdminPage';
+import NewCategory from './components/NewCategory';
 import './cssFiles/loginPage.css';
 import './cssFiles/userPage.css';
 import './cssFiles/surveyPage.css';
@@ -23,9 +24,9 @@ export default class App extends Component {
 
     this.state = {
       users: [
-        new User('tomer', '1234', 'aaaa@gmail.com', 'User'),
-        new User('ram', '4321', 'bbbb@walla.com', 'User'),
-        new User('jon', '1111', 'cccc@gmail.com', 'Admin')
+        new User('tomer', 'Tomer', 'Steiner', '1234', 'aaaa@gmail.com', 'User'),
+        new User('ram', 'Ram', 'Maian', '4321', 'bbbb@walla.com', 'User'),
+        new User('jon', 'Jon', 'Snow', '1111', 'cccc@gmail.com', 'Admin')
       ],
 
       surveys: [
@@ -47,10 +48,12 @@ export default class App extends Component {
     }
   }
 
-  updateUser = (userName, mail) => {
+  updateUser = (userName, firstName, lastName, mail) => {
     let loggedUserIndex = localStorage.getItem('loggedUserIndex');
     let tempUsers = this.state.users;
     tempUsers[loggedUserIndex].user = userName;
+    tempUsers[loggedUserIndex].firstName = firstName;
+    tempUsers[loggedUserIndex].lastName = lastName;
     tempUsers[loggedUserIndex].mail = mail;
     this.setState({ users: tempUsers });
   }
@@ -69,6 +72,12 @@ export default class App extends Component {
     return -1;
   }
 
+  addNewCategory = (newCategory) => {
+    let tempCategories = this.state.categories;
+    tempCategories.push(newCategory);
+    this.setState({ categories: tempCategories });
+  }
+
   render() {
     return (
       <div>
@@ -82,6 +91,7 @@ export default class App extends Component {
             <Route exact path={ROUTES.SURVEYPAGE} render={(props) => <SurveyPage {...props} users={this.state.users} surveys={this.state.surveys} pushCompletedSurvey={this.pushCompletedSurvey} findSurveyIdInCompletedArr={this.findSurveyIdInCompletedArr} />} />
             <Route exact path={ROUTES.COUPONPAGE} render={(props) => <CouponPage {...props} users={this.state.users} />} />
             <Route exact path={ROUTES.ADMIN} render={(props) => <AdminPage {...props} users={this.state.users} />} />
+            <Route exact path={ROUTES.NEW_CATEGORY} render={(props) => <NewCategory addNewCategory={this.addNewCategory} {...props} />} />
           </Switch>
 
         </Router>

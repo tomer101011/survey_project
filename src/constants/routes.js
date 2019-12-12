@@ -6,3 +6,5 @@ export const COUPONPAGE = '/couponPage';
 export const USER_INFO = '/userInfo';
 export const ALLSURVEYS = '/allSurveys';
 export const SURVEYPAGE = '/surveyPage';
+export const NEW_CATEGORY = '/newCategory';
+

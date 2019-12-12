@@ -19,12 +19,7 @@ export default class SurveyPage extends Component {
                 {this.doRedirect()}
                 <div id="boxSurvey" className="row loginSheet">
                     <div className="col-12">
-                        <div className="row">
-                            <div style={{ textAlign: "left" }} className="col-6">
-                                <button id="disc-style" className="link-style" onClick={() => this.changePathToGo(ROUTES.ALLSURVEYS)}>Go Back</button>
-                            </div>
-                            {this.addClearSurveyButton()}
-                        </div>
+                        {this.addClearGoBackButtons()}
                         <div className="row">
                             <div className="col-12">
                                 <h1 className="new-display-4">{this.props.surveys[this.state.indexOfSurvey].name}</h1>
@@ -38,13 +33,27 @@ export default class SurveyPage extends Component {
         )
     }
 
-    addClearSurveyButton = () => {
+    addClearGoBackButtons = () => {
         if (localStorage.getItem('whereToGo') === 'available')
             return (
-                <div style={{ textAlign: "right" }} className="col-6">
-                    <button id="disc-style" className="link-style" onClick={() => this.clearSurvey()}>Clear Survey</button>
+                <div className="row">
+                    <div style={{ textAlign: "left" }} className="col-6">
+                        <button id="disc-style" className="link-style" onClick={() => this.changePathToGo(ROUTES.ALLSURVEYS)}>Go Back</button>
+                    </div>
+                    <div style={{ textAlign: "right" }} className="col-6">
+                        <button id="disc-style" className="link-style" onClick={() => this.clearSurvey()}>Clear Survey</button>
+                    </div>
                 </div>
             )
+        else {
+            return (
+                <div className="row">
+                    <div style={{ textAlign: "left" }} className="col-12">
+                        <button id="disc-style" className="link-style" onClick={() => this.changePathToGo(ROUTES.ALLSURVEYS)}>Go Back</button>
+                    </div>
+                </div>
+            )
+        }
     }
 
     addSubmitButton = () => {

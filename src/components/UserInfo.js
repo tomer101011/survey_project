@@ -8,6 +8,8 @@ export default class UserInfo extends Component {
         super(props);
         this.state = {
             userName: this.props.users[window.localStorage.getItem("loggedUserIndex")].user,
+            firstName: this.props.users[window.localStorage.getItem("loggedUserIndex")].firstName,
+            lastName: this.props.users[window.localStorage.getItem("loggedUserIndex")].lastName,
             mail: this.props.users[window.localStorage.getItem("loggedUserIndex")].mail,
             loggedUserIndex: window.localStorage.getItem("loggedUserIndex"),
             done: false
@@ -32,17 +34,27 @@ export default class UserInfo extends Component {
                         </div>
                         <div className="row margin-top">
                             <div className="col-12">
-                                <input onChange={this.setUserName} defaultValue={this.props.users[this.state.loggedUserIndex].user} className="inputStyle" type="text" placeholder="User Name" />
+                                <input id="userName" onChange={this.setUserName} defaultValue={this.state.userName} className="inputStyle" type="text" placeholder="User Name" />
+                            </div>
+                        </div>
+                        <div className="row margin-top">
+                            <div className="col-12">
+                                <input id="firstName" onChange={this.setFirstName} defaultValue={this.state.firstName} className="inputStyle" type="text" placeholder="First Name" />
+                            </div>
+                        </div>
+                        <div className="row margin-top">
+                            <div className="col-12">
+                                <input id="lastName" onChange={this.setLastName} defaultValue={this.state.lastName} className="inputStyle" type="text" placeholder="Last Name" />
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-12">
-                                <input onChange={this.setMail} defaultValue={this.props.users[this.state.loggedUserIndex].mail} className="inputStyle" type="text" placeholder="Mail" />
+                                <input id="mail" onChange={this.setMail} defaultValue={this.state.mail} className="inputStyle" type="text" placeholder="Mail" />
                             </div>
                         </div>
                         <div className="row margin-bottom">
                             <div className="col-12">
-                                <button onClick={() => this.updateUser()} className="btn btn-primary buttonStyleWidth">Update Your Info</button>
+                                <button onClick={() => this.updateUser()} className="btn btn-info buttonStyleWidth">Update Your Info</button>
                             </div>
                         </div>
                     </div>
@@ -60,23 +72,56 @@ export default class UserInfo extends Component {
         this.setState({ userName: e.target.value });
     }
 
+    setFirstName = (e) => {
+        this.setState({ firstName: e.target.value });
+    }
+
+    setLastName = (e) => {
+        this.setState({ lastName: e.target.value });
+    }
+
     setMail = (e) => {
         this.setState({ mail: e.target.value });
     }
 
-    setDefaultInputs = () => {
-        this.setState({
-            userName: this.props.users[this.state.loggedUserIndex].user,
-            mail: this.props.users[this.state.loggedUserIndex].mail
-        });
+    areInputsBlank = () => {
+        let someAreBlank = false;
+
+        if (this.state.userName === '') {
+            document.getElementById("userName").style.border = "2px solid red";
+            someAreBlank = true;
+        }
+        else
+            document.getElementById("userName").style.border = "none";
+
+        if (this.state.firstName === '') {
+            document.getElementById("firstName").style.border = "2px solid red";
+            someAreBlank = true;
+        }
+        else
+            document.getElementById("firstName").style.border = "none";
+
+        if (this.state.lastName === '') {
+            document.getElementById("lastName").style.border = "2px solid red";
+            someAreBlank = true;
+        }
+        else
+            document.getElementById("lastName").style.border = "none";
+
+        if (this.state.mail === '') {
+            document.getElementById("mail").style.border = "2px solid red";
+            someAreBlank = true;
+        }
+        else
+            document.getElementById("mail").style.border = "none";
+
+        return someAreBlank;
     }
 
     updateUser = () => {
-        if (this.state.userName === "" || this.state.mail === "")
-            alert('User name or mail are blank');
-
-        else {
-            this.props.updateUser(this.state.userName, this.state.mail);
+        if (!this.areInputsBlank()) {
+            this.props.updateUser(this.state.userName, this.state.firstName, this.state.lastName, this.state.mail);
+            alert("User info changed successfully!");
             this.setState({ done: true });
         }
     }
