@@ -9,9 +9,13 @@ import SurveyPage from './components/SurveyPage';
 import CouponPage from './components/CouponPage';
 import AdminPage from './components/AdminPage';
 import NewCategory from './components/NewCategory';
+import AdminEditUsers from './components/AdminEditUsers';
+import EditSurveyPage from './components/EditSurveyPage';
+import CreateSurveyPage from './components/CreateSurveyPage';
 import './cssFiles/loginPage.css';
 import './cssFiles/userPage.css';
 import './cssFiles/surveyPage.css';
+import './cssFiles/createPageStyle.css';
 import *  as ROUTES from './constants/routes';
 import { User, Survey, Question } from './classes/classes.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -48,13 +52,12 @@ export default class App extends Component {
     }
   }
 
-  updateUser = (userName, firstName, lastName, mail) => {
-    let loggedUserIndex = localStorage.getItem('loggedUserIndex');
+  updateUser = (indexUser, userName, firstName, lastName, mail) => {
     let tempUsers = this.state.users;
-    tempUsers[loggedUserIndex].user = userName;
-    tempUsers[loggedUserIndex].firstName = firstName;
-    tempUsers[loggedUserIndex].lastName = lastName;
-    tempUsers[loggedUserIndex].mail = mail;
+    tempUsers[indexUser].user = userName;
+    tempUsers[indexUser].firstName = firstName;
+    tempUsers[indexUser].lastName = lastName;
+    tempUsers[indexUser].mail = mail;
     this.setState({ users: tempUsers });
   }
 
@@ -78,6 +81,12 @@ export default class App extends Component {
     this.setState({ categories: tempCategories });
   }
 
+  addSurvey = (survey) => {
+    let tempSurveys = this.state.surveys;
+    tempSurveys.push(survey);
+    this.setState({ surveys: tempSurveys });
+  }
+
   render() {
     return (
       <div>
@@ -91,7 +100,10 @@ export default class App extends Component {
             <Route exact path={ROUTES.SURVEYPAGE} render={(props) => <SurveyPage {...props} users={this.state.users} surveys={this.state.surveys} pushCompletedSurvey={this.pushCompletedSurvey} findSurveyIdInCompletedArr={this.findSurveyIdInCompletedArr} />} />
             <Route exact path={ROUTES.COUPONPAGE} render={(props) => <CouponPage {...props} users={this.state.users} />} />
             <Route exact path={ROUTES.ADMIN} render={(props) => <AdminPage {...props} users={this.state.users} />} />
-            <Route exact path={ROUTES.NEW_CATEGORY} render={(props) => <NewCategory addNewCategory={this.addNewCategory} {...props} />} />
+            <Route exact path={ROUTES.NEW_CATEGORY} render={(props) => <NewCategory {...props} addNewCategory={this.addNewCategory} />} />
+            <Route exact path={ROUTES.ADMIN_EDIT_USERS} render={(props) => <AdminEditUsers {...props} users={this.state.users} updateUser={this.updateUser} />} />
+            <Route exact path={ROUTES.CREATESURVEY} render={(props) => <CreateSurveyPage {...props} surveys={this.state.surveys} categories={this.state.categories} addSurvey={this.addSurvey} />} />
+            <Route exact path={ROUTES.EDITSURVEY} render={(props) => <EditSurveyPage {...props} surveys={this.state.surveys} />} />
           </Switch>
 
         </Router>

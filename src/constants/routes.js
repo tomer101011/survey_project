@@ -7,4 +7,7 @@ export const USER_INFO = '/userInfo';
 export const ALLSURVEYS = '/allSurveys';
 export const SURVEYPAGE = '/surveyPage';
 export const NEW_CATEGORY = '/newCategory';
+export const ADMIN_EDIT_USERS = '/adminEditUsers';
+export const EDITSURVEY = '/editSurveyPage';
+export const CREATESURVEY = '/createSurveyPage';
 

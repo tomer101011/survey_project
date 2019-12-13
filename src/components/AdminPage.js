@@ -44,17 +44,12 @@ export default class AdminPage extends Component {
                         </div>
                         <div className="row">
                             <div className="col-12">
-                                <button className="link-style" onClick={() => 1}>Create New Survey</button>
+                                <button className="link-style" onClick={() => this.changePathToGo(ROUTES.CREATESURVEY)}>Create New Survey</button>
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-12">
-                                <button className="link-style" onClick={() => 2}>Edit Survey</button>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-12">
-                                <button className="link-style" onClick={() => 3}>Delete Survey</button>
+                                <button className="link-style" onClick={() => this.changePathToGo(ROUTES.EDITSURVEY)}>Edit Surveys</button>
                             </div>
                         </div>
                         <div className="row">
@@ -64,7 +59,7 @@ export default class AdminPage extends Component {
                         </div>
                         <div className="row">
                             <div style={{ paddingBottom: "10px" }} className="col-12">
-                                <button className="link-style" onClick={() => 4}>Edit Users</button>
+                                <button className="link-style" onClick={() => this.changePathToGo(ROUTES.ADMIN_EDIT_USERS)}>Edit Users</button>
                             </div>
                         </div>
                         <div className="row">

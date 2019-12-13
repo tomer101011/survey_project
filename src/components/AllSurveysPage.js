@@ -42,7 +42,7 @@ export default class AllSurveysPage extends Component {
     loadCategories = () => {
         return (
             <select id="category" onChange={() => this.searchSurveyByCategory()}>
-                <option >All Categories</option>
+                <option>All Categories</option>
                 {this.props.categories.map((categ, i) => { return <option key={i}>{categ}</option> })}
             </select>
         );
