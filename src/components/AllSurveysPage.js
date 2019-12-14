@@ -8,6 +8,7 @@ export default class AllSurveysPage extends Component {
         super(props);
         this.state = {
             category: "All Categories",
+            loggedUserIndex: Number(localStorage.getItem('loggedUserIndex')),
             path: "",
             changePage: false
         }
@@ -32,11 +33,26 @@ export default class AllSurveysPage extends Component {
                                 {this.changeHeader()}
                             </div>
                         </div>
-                        {this.loadSurveys(this.state.category).map(survey => { return survey })}
+                        {this.loadSurveys()}
                     </div>
                 </div>
             </div>
         )
+    }
+
+    loadSurveys = () => {
+        let surveysArr = this.addSurveys();
+        if (surveysArr.length === 0) {
+            return (
+                <div className="row">
+                    <div className="col-12">
+                        <h1 className="header-style">No surveys to show</h1>
+                    </div>
+                </div>
+            );
+        }
+        else
+            return surveysArr.map(survey => { return survey });
     }
 
     loadCategories = () => {
@@ -84,31 +100,31 @@ export default class AllSurveysPage extends Component {
         );
     }
 
-    loadSurveys = (category) => {
+    addSurveys = () => {
         let surveysArr = [];
         let whereToLoad = localStorage.getItem('whereToGo');
         if (whereToLoad === 'available') {
             for (let i = 0; i < this.props.surveys.length; i++) {
                 if (this.props.findSurveyIdInCompletedArr(this.props.surveys[i].id) === -1) {
-                    if (category === 'All Categories')
+                    if (this.state.category === 'All Categories')
                         this.pushNewLinkToSurveysArr(surveysArr, i);
 
-                    else if (this.props.surveys[i].category === category)
+                    else if (this.props.surveys[i].category === this.state.category)
                         this.pushNewLinkToSurveysArr(surveysArr, i);
 
                 }
             }
         }
         else {
-            for (let i = 0; i < this.props.surveys.length; i++) {
-                if (this.props.findSurveyIdInCompletedArr(this.props.surveys[i].id) !== -1) {
-                    if (category === 'All Categories')
-                        this.pushNewLinkToSurveysArr(surveysArr, i);
+            let userCompletedSurveys = this.props.users[this.state.loggedUserIndex].completedSurveys;
+            for (let i = 0; i < userCompletedSurveys.length; i++) {
+                if (this.state.category === 'All Categories')
+                    this.pushNewLinkToSurveysArr(surveysArr, userCompletedSurveys[i].indexOfSurvey);
 
-                    else if (this.props.surveys[i].category === category)
-                        this.pushNewLinkToSurveysArr(surveysArr, i);
+                else if (this.props.surveys[i].category === this.state.category)
+                    this.pushNewLinkToSurveysArr(surveysArr, userCompletedSurveys[i].indexOfSurvey);
 
-                }
+
             }
         }
         return surveysArr;

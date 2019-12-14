@@ -29,7 +29,7 @@ export default class CouponPage extends Component {
                                 <h1 className="new-display-4">Coupon Awards</h1>
                             </div>
                         </div>
-                        {this.loadCoupons().map(coupon => { return coupon })}
+                        {this.loadCoupons()}
                     </div>
                 </div>
             </div>
@@ -37,6 +37,21 @@ export default class CouponPage extends Component {
     }
 
     loadCoupons = () => {
+        let couponsArr = this.addCoupons();
+        if (couponsArr.length === 0) {
+            return (
+                <div className="row">
+                    <div className="col-12">
+                        <h1 className="header-style">No coupons to show</h1>
+                    </div>
+                </div>
+            );
+        }
+        else
+            return couponsArr.map(coupon => { return coupon });
+    }
+
+    addCoupons = () => {
         let couponsArr = [];
         for (let i = 0; i < this.props.users[this.state.loggedUserIndex].completedSurveys.length; i++) {
             if (this.props.users[this.state.loggedUserIndex].completedSurveys[i].couponRedeemed) {

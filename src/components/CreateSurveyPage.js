@@ -55,7 +55,7 @@ export default class CreateSurveyPage extends Component {
                         <div className="row margin-bottom">
                             <div className="col-12">
                                 <div className="input-group">
-                                    <input id="answerName" style={{ backgroundColor: "#f2f2f2" }} type="text" className="form-control" onChange={this.setAnswer} placeholder="Add Answers to Question" aria-label="Input group example" aria-describedby="btnGroupAddon2" />
+                                    <input id="answerName" type="text" className="form-control" onChange={this.setAnswer} placeholder="Add Answers to Question" aria-label="Input group example" aria-describedby="btnGroupAddon2" />
                                     <button onClick={() => this.addAnswer()} id="addAnswer" className="btn btn-success">+</button>
                                 </div>
                             </div>
@@ -102,7 +102,7 @@ export default class CreateSurveyPage extends Component {
         else {
             document.getElementById("questionName").style.border = "1px solid #ced4da";
             if (this.state.answerArr.length <= 1)
-                alert("You need to add minimum 2 answers to the question")
+                alert("You need to add minimum 2 answers to the question");
 
             else {
                 let question = new Question(this.state.questionName, this.state.answerArr);

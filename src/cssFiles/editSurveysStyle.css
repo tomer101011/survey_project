@@ -1,0 +1,26 @@
+.marginText {
+    margin-top: 50px;
+}
+
+.questionStyle {
+    height: 80%;
+    width: 100%;
+    border: 1px solid #ced4da;
+    background-color: white;
+    border-radius: .25rem;
+    padding: .375rem .75rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.answerStyle {
+    height: 2px;
+    background: #f2f2f2;
+    border: 0;
+    padding: .800rem .75rem;
+    width: 80%;
+    border-radius: 0.25rem;
+}
+
+.heightInput {
+    height: 38px;
+}

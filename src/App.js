@@ -16,6 +16,7 @@ import './cssFiles/loginPage.css';
 import './cssFiles/userPage.css';
 import './cssFiles/surveyPage.css';
 import './cssFiles/createPageStyle.css';
+import './cssFiles/editSurveysStyle.css';
 import *  as ROUTES from './constants/routes';
 import { User, Survey, Question } from './classes/classes.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -36,16 +37,16 @@ export default class App extends Component {
       surveys: [
         new Survey(0, 'bla bla', 'Bedroom',
           [new Question('are this better?', ['one', 'two', 'three']),
-          new Question('bb', ['four', 'five', 'six']),
-          new Question('ccc', ['four', 'five', 'six'])])
+          new Question('bb', ['a', 'b', 'c']),
+          new Question('ccc', ['d', 'e', 'f'])])
         ,
         new Survey(1, 'ma ma', 'Bathroom',
           [new Question('is this good?', ['four', 'five', 'six'])])
         ,
         new Survey(2, 'na na', 'Bedroom',
           [new Question('What is this?', ['seven', 'eight', 'nine']),
-          new Question('bb', ['four', 'five', 'six']),
-          new Question('ccc', ['four', 'five', 'six'])])
+          new Question('bb', ['4', '5', '6']),
+          new Question('ccc', ['1', '2', '3'])])
       ],
 
       categories: ['Bedroom', 'Bathroom']
@@ -103,7 +104,7 @@ export default class App extends Component {
             <Route exact path={ROUTES.NEW_CATEGORY} render={(props) => <NewCategory {...props} addNewCategory={this.addNewCategory} />} />
             <Route exact path={ROUTES.ADMIN_EDIT_USERS} render={(props) => <AdminEditUsers {...props} users={this.state.users} updateUser={this.updateUser} />} />
             <Route exact path={ROUTES.CREATESURVEY} render={(props) => <CreateSurveyPage {...props} surveys={this.state.surveys} categories={this.state.categories} addSurvey={this.addSurvey} />} />
-            <Route exact path={ROUTES.EDITSURVEY} render={(props) => <EditSurveyPage {...props} surveys={this.state.surveys} />} />
+            <Route exact path={ROUTES.EDITSURVEY} render={(props) => <EditSurveyPage {...props} surveys={this.state.surveys} categories={this.state.categories} />} />
           </Switch>
 
         </Router>
