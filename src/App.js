@@ -53,6 +53,12 @@ export default class App extends Component {
     }
   }
 
+  updateSurvey = (updatedSurvey, surveyIndex) => {
+    let tempSurveys = this.state.surveys;
+    tempSurveys[surveyIndex] = updatedSurvey;
+    this.setState({ surveys: tempSurveys });
+  }
+
   deleteSurvey = (surveyIndex) => {
     let tempSurveys = this.state.surveys;
     tempSurveys[surveyIndex].deleted = true;
@@ -110,7 +116,7 @@ export default class App extends Component {
             <Route exact path={ROUTES.NEW_CATEGORY} render={(props) => <NewCategory {...props} addNewCategory={this.addNewCategory} />} />
             <Route exact path={ROUTES.ADMIN_EDIT_USERS} render={(props) => <AdminEditUsers {...props} users={this.state.users} updateUser={this.updateUser} />} />
             <Route exact path={ROUTES.CREATESURVEY} render={(props) => <CreateSurveyPage {...props} surveys={this.state.surveys} categories={this.state.categories} addSurvey={this.addSurvey} />} />
-            <Route exact path={ROUTES.EDITSURVEY} render={(props) => <EditSurveyPage {...props} surveys={this.state.surveys} categories={this.state.categories} deleteSurvey={this.deleteSurvey} />} />
+            <Route exact path={ROUTES.EDITSURVEY} render={(props) => <EditSurveyPage {...props} surveys={this.state.surveys} categories={this.state.categories} deleteSurvey={this.deleteSurvey} updateSurvey={this.updateSurvey} />} />
           </Switch>
 
         </Router>

@@ -3,8 +3,6 @@ import *  as ROUTES from '../constants/routes';
 import { Redirect } from 'react-router-dom';
 
 export default class EditSurveyPage extends Component {
-    questionArr = [];
-
     constructor(props) {
         super(props);
         this.state = {
@@ -60,13 +58,36 @@ export default class EditSurveyPage extends Component {
                 <div className="row">
                     <div className="col-12">
                         <div className="btn-group" role="group" aria-label="Basic example">
-                            <button onClick={() => 1} className="btn btn-info">Update Survey</button>
+                            <button onClick={() => this.updateSurvey()} className="btn btn-info">Update Survey</button>
                             <button onClick={() => this.deleteSurvey()} className="btn btn-danger">Delete</button>
                         </div>
                     </div>
                 </div>
             );
 
+    }
+
+    updateSurvey = () => {
+        let tempSurvey = this.props.surveys[this.state.surveyIndexSelected];
+
+        let tempSurveyName = document.getElementById('nameOfSurvey').value;
+        if (tempSurveyName !== '')
+            tempSurvey.name = tempSurveyName;
+
+        for (let i = 0; i < this.props.surveys[this.state.surveyIndexSelected].questions.length; i++) {
+            let tempQuestionName = document.getElementById('a' + i).value;
+            if (tempQuestionName !== '')
+                tempSurvey.questions[i].question = tempQuestionName;
+
+            for (let j = 0; j < this.props.surveys[this.state.surveyIndexSelected].questions[i].answers.length; j++) {
+                let tempAnswerName = document.getElementById('a' + i + j).value;
+                if (tempAnswerName !== '')
+                    tempSurvey.questions[i].answers[j] = tempAnswerName;
+            }
+        }
+        this.props.updateSurvey(tempSurvey, this.state.surveyIndexSelected);
+        this.setState({ questionArr: [], surveyIndexSelected: -1 })
+        alert("Survey updated successfully!");
     }
 
     deleteSurvey = () => {
@@ -81,7 +102,7 @@ export default class EditSurveyPage extends Component {
             return (
                 <div className="row">
                     <div className="col-12">
-                        <input className="nameStyle" placeholder={this.props.surveys[this.state.surveyIndexSelected].name} />
+                        <input id="nameOfSurvey" className="nameStyle" placeholder={this.props.surveys[this.state.surveyIndexSelected].name} />
                     </div>
                 </div>
             );
