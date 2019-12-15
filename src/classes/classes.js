@@ -21,6 +21,7 @@ export class Survey {
     id;
     name;
     category;
+    deleted;
     questions = [];
 
     constructor(id, name, category, questions) {
@@ -28,6 +29,7 @@ export class Survey {
         this.name = name;
         this.category = category;
         this.questions = questions;
+        this.deleted = false;
     }
 }
 

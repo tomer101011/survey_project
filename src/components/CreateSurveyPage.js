@@ -85,7 +85,13 @@ export default class CreateSurveyPage extends Component {
                 alert("You didn't add any questions to the survey");
 
             else {
-                let survey = new Survey(this.props.surveys.length, this.state.surveyName, category, this.state.questionArr);
+                let newSurveyId;
+                if (this.props.length === 0)
+                    newSurveyId = 0;
+                else
+                    newSurveyId = this.props.surveys[this.props.surveys.length - 1].id + 1;
+
+                let survey = new Survey(newSurveyId, this.state.surveyName, category, this.state.questionArr);
                 this.props.addSurvey(survey);
                 document.getElementById("surveyName").value = "";
                 alert("Survey added successfully!");

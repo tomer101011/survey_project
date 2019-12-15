@@ -105,13 +105,14 @@ export default class AllSurveysPage extends Component {
         let whereToLoad = localStorage.getItem('whereToGo');
         if (whereToLoad === 'available') {
             for (let i = 0; i < this.props.surveys.length; i++) {
-                if (this.props.findSurveyIdInCompletedArr(this.props.surveys[i].id) === -1) {
-                    if (this.state.category === 'All Categories')
-                        this.pushNewLinkToSurveysArr(surveysArr, i);
+                if (!this.props.surveys[i].deleted) {
+                    if (this.props.findSurveyIdInCompletedArr(this.props.surveys[i].id) === -1) {
+                        if (this.state.category === 'All Categories')
+                            this.pushNewLinkToSurveysArr(surveysArr, i);
 
-                    else if (this.props.surveys[i].category === this.state.category)
-                        this.pushNewLinkToSurveysArr(surveysArr, i);
-
+                        else if (this.props.surveys[i].category === this.state.category)
+                            this.pushNewLinkToSurveysArr(surveysArr, i);
+                    }
                 }
             }
         }

@@ -10,6 +10,7 @@ export default class EditSurveyPage extends Component {
         this.state = {
             category: "All Categories",
             questionArr: [],
+            surveyIndexSelected: -1,
             path: "",
             changePage: false
         }
@@ -33,6 +34,7 @@ export default class EditSurveyPage extends Component {
                         <div className="row">
 
                             <div className="col-7">
+                                {this.loadSelectedSurveyName()}
                                 {this.loadSurveyData()}
                             </div>
 
@@ -45,15 +47,44 @@ export default class EditSurveyPage extends Component {
                                 {this.loadSurveysNames(this.state.category).map(survey => { return survey })}
                             </div>
                         </div>
-                        <div className="row">
-                            <div className="col-12">
-                                <button onClick={() => 1} className="btn btn-info">Update Survey</button>
-                            </div>
-                        </div>
+                        {this.addUpdateButton()}
                     </div>
                 </div>
             </div>
         )
+    }
+
+    addUpdateButton = () => {
+        if (this.state.questionArr.length !== 0)
+            return (
+                <div className="row">
+                    <div className="col-12">
+                        <div className="btn-group" role="group" aria-label="Basic example">
+                            <button onClick={() => 1} className="btn btn-info">Update Survey</button>
+                            <button onClick={() => this.deleteSurvey()} className="btn btn-danger">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            );
+
+    }
+
+    deleteSurvey = () => {
+        if (window.confirm('Do you want to delete the survey?')) {
+            this.props.deleteSurvey(this.state.surveyIndexSelected);
+            this.setState({ questionArr: [], surveyIndexSelected: -1 });
+        }
+    }
+
+    loadSelectedSurveyName = () => {
+        if (this.state.surveyIndexSelected !== -1)
+            return (
+                <div className="row">
+                    <div className="col-12">
+                        <input className="nameStyle" placeholder={this.props.surveys[this.state.surveyIndexSelected].name} />
+                    </div>
+                </div>
+            );
     }
 
     loadQuestionsToArr = (surveyIndex) => {
@@ -84,7 +115,7 @@ export default class EditSurveyPage extends Component {
             );
         }
         this.clearInputs();
-        this.setState({ questionArr: tempQuestionsArr });
+        this.setState({ questionArr: tempQuestionsArr, surveyIndexSelected: surveyIndex });
     }
 
     clearInputs = () => {
@@ -106,12 +137,13 @@ export default class EditSurveyPage extends Component {
     loadSurveysNames = (category) => {
         let surveysArr = [];
         for (let i = 0; i < this.props.surveys.length; i++) {
-            if (category === 'All Categories')
-                this.pushNewLinkToSurveysArr(surveysArr, i);
+            if (!this.props.surveys[i].deleted) {
+                if (category === 'All Categories')
+                    this.pushNewLinkToSurveysArr(surveysArr, i);
 
-            else if (this.props.surveys[i].category === category)
-                this.pushNewLinkToSurveysArr(surveysArr, i);
-
+                else if (this.props.surveys[i].category === category)
+                    this.pushNewLinkToSurveysArr(surveysArr, i);
+            }
         }
         return surveysArr;
     }
