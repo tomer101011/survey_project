@@ -56,6 +56,7 @@ export default class AllSurveysPage extends Component {
     }
 
     loadCategories = () => {
+        //here- change so only the categories assigned for user shown.
         return (
             <select id="category" onChange={() => this.searchSurveyByCategory()}>
                 <option>All Categories</option>

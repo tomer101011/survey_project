@@ -12,6 +12,7 @@ import NewCategory from './components/NewCategory';
 import AdminEditUsers from './components/AdminEditUsers';
 import EditSurveyPage from './components/EditSurveyPage';
 import CreateSurveyPage from './components/CreateSurveyPage';
+import AssignCategories from './components/AssignCategories';
 import './cssFiles/loginPage.css';
 import './cssFiles/userPage.css';
 import './cssFiles/surveyPage.css';
@@ -117,6 +118,7 @@ export default class App extends Component {
             <Route exact path={ROUTES.ADMIN_EDIT_USERS} render={(props) => <AdminEditUsers {...props} users={this.state.users} updateUser={this.updateUser} />} />
             <Route exact path={ROUTES.CREATESURVEY} render={(props) => <CreateSurveyPage {...props} surveys={this.state.surveys} categories={this.state.categories} addSurvey={this.addSurvey} />} />
             <Route exact path={ROUTES.EDITSURVEY} render={(props) => <EditSurveyPage {...props} surveys={this.state.surveys} categories={this.state.categories} deleteSurvey={this.deleteSurvey} updateSurvey={this.updateSurvey} />} />
+            <Route exact path={ROUTES.ASSIGN_CATEGORIES} render={(props) => <AssignCategories {...props} users={this.state.users} categories={this.state.categories} />} />
           </Switch>
 
         </Router>

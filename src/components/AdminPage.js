@@ -74,7 +74,7 @@ export default class AdminPage extends Component {
                         </div>
                         <div className="row">
                             <div style={{ paddingBottom: "10px" }} className="col-12">
-                                <button className="link-style" onClick={() => 6}>All Categories</button>
+                                <button className="link-style" onClick={() => this.changePathToGo(ROUTES.ASSIGN_CATEGORIES)}>Assign Categories</button>
                             </div>
                         </div>
                     </div>

@@ -10,4 +10,6 @@ export const NEW_CATEGORY = '/newCategory';
 export const ADMIN_EDIT_USERS = '/adminEditUsers';
 export const EDITSURVEY = '/editSurveyPage';
 export const CREATESURVEY = '/createSurveyPage';
+export const ASSIGN_CATEGORIES = '/assignCategories';
+
 
