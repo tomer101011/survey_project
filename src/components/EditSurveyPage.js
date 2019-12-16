@@ -37,7 +37,7 @@ export default class EditSurveyPage extends Component {
                             </div>
 
                             <div className="col-5">
-                                <div style={{ paddingBottom: "15px" }} className="row">
+                                <div className="row">
                                     <div className="col-12">
                                         {this.loadCategories()}
                                     </div>
@@ -149,7 +149,7 @@ export default class EditSurveyPage extends Component {
     loadSurveyData = () => {
         if (this.state.questionArr.length === 0)
             return (<h1 className="header-style marginText">Choose a survey to edit</h1>);
-            
+
         else return this.state.questionArr.map(question => { return question });
     }
 
