@@ -148,10 +148,8 @@ export default class EditSurveyPage extends Component {
 
     loadSurveyData = () => {
         if (this.state.questionArr.length === 0)
-            return (
-                <h1 className="header-style marginText">Choose a survey to edit</h1>
-            );
-
+            return (<h1 className="header-style marginText">Choose a survey to edit</h1>);
+            
         else return this.state.questionArr.map(question => { return question });
     }
 

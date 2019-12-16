@@ -6,14 +6,16 @@ export class User {
     mail;
     role;
     completedSurveys = []; // Ids of completed surveys
+    assignedCategories;
 
-    constructor(user, firstName, lastName, password, mail, role) {
+    constructor(user, firstName, lastName, password, mail, role, assignedCategories) {
         this.user = user;
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.mail = mail;
         this.role = role;
+        this.assignedCategories = assignedCategories;
     }
 }
 

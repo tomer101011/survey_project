@@ -25,7 +25,16 @@ export default class SurveyPage extends Component {
                                 <h1 className="new-display-4">{this.props.surveys[this.state.indexOfSurvey].name}</h1>
                             </div>
                         </div>
-                        {this.loadSurvey().map(que => { return que })}
+                        <div className="row">
+                            <div className="col-12">
+                                <table className="mx-auto">
+                                    <tbody>
+                                        {this.loadSurvey().map(que => { return que })}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
                         {this.addSubmitButton()}
                     </div>
                 </div>
@@ -126,39 +135,30 @@ export default class SurveyPage extends Component {
             let answersArr = [];
             for (let j = 0; j < this.props.surveys[this.state.indexOfSurvey].questions[i].answers.length; j++) {
                 answersArr.push(
-                    <div key={j} className="row">
-                        <div style={{ marginLeft: "480px" }} className="col-12">
-                            <table style={{ float: "left" }}  >
-                                <tbody>
-                                    <tr>
-                                        <td className="padding-table">
-                                            {this.addRadioButton(i, j)}
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <table style={{ float: "center" }} >
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <h4 className="autoBr">{this.props.surveys[this.state.indexOfSurvey].questions[i].answers[j]}</h4>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                    <tr key={j}>
+                        <td className="padding-table"> {this.addRadioButton(i, j)}</td>
+                        <td><h4 className="autoBr">{this.props.surveys[this.state.indexOfSurvey].questions[i].answers[j]}</h4></td>
+                    </tr>
                 );
             }
             questionsArr.push(
-                <div key={i}>
-                    <div className="row">
-                        <div className="col-12">
-                            <h3 className="sub-header autoBr">{this.props.surveys[this.state.indexOfSurvey].questions[i].question}</h3>
-                        </div>
-                    </div>
-                    {answersArr.map(ans => { return ans })}
-                </div>
+                <tr key={i}>
+                    <td>
+                        <table className="mx-auto">
+                            <tbody>
+                                <tr>
+                                    <td><h3 className="sub-header autoBr">{this.props.surveys[this.state.indexOfSurvey].questions[i].question}</h3></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table className="mx-auto">
+                            <tbody>
+                                {answersArr.map(ans => { return ans })}
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+
             );
         }
         return questionsArr;

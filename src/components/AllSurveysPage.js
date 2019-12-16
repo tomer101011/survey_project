@@ -56,11 +56,16 @@ export default class AllSurveysPage extends Component {
     }
 
     loadCategories = () => {
-        //here- change so only the categories assigned for user shown.
+        let chosenCategoriesArr = [];
+        if (localStorage.getItem('whereToGo') === 'available')
+            chosenCategoriesArr = this.props.users[this.state.loggedUserIndex].assignedCategories;
+        else
+            chosenCategoriesArr = this.props.categories;
+
         return (
             <select id="category" onChange={() => this.searchSurveyByCategory()}>
                 <option>All Categories</option>
-                {this.props.categories.map((categ, i) => { return <option key={i}>{categ}</option> })}
+                {chosenCategoriesArr.map((categ, i) => { return <option key={i}>{categ}</option> })}
             </select>
         );
     }
@@ -101,19 +106,28 @@ export default class AllSurveysPage extends Component {
         );
     }
 
+    findCategSurvInAssigned = (indexSurvey) => {
+        for (let i = 0; i < this.props.users[this.state.loggedUserIndex].assignedCategories.length; i++)
+            if (this.props.users[this.state.loggedUserIndex].assignedCategories[i] === this.props.surveys[indexSurvey].category)
+                return true;
+
+        return false;
+    }
+
     addSurveys = () => {
         let surveysArr = [];
         let whereToLoad = localStorage.getItem('whereToGo');
         if (whereToLoad === 'available') {
             for (let i = 0; i < this.props.surveys.length; i++) {
-                if (!this.props.surveys[i].deleted) {
-                    if (this.props.findSurveyIdInCompletedArr(this.props.surveys[i].id) === -1) {
-                        if (this.state.category === 'All Categories')
-                            this.pushNewLinkToSurveysArr(surveysArr, i);
+                if (!this.props.surveys[i].deleted &&
+                    this.props.findSurveyIdInCompletedArr(this.props.surveys[i].id) === -1) {
 
-                        else if (this.props.surveys[i].category === this.state.category)
-                            this.pushNewLinkToSurveysArr(surveysArr, i);
+                    if (this.state.category === 'All Categories' && this.findCategSurvInAssigned(i)) {
+                        this.pushNewLinkToSurveysArr(surveysArr, i);
                     }
+
+                    else if (this.props.surveys[i].category === this.state.category)
+                        this.pushNewLinkToSurveysArr(surveysArr, i);
                 }
             }
         }
@@ -123,10 +137,8 @@ export default class AllSurveysPage extends Component {
                 if (this.state.category === 'All Categories')
                     this.pushNewLinkToSurveysArr(surveysArr, userCompletedSurveys[i].indexOfSurvey);
 
-                else if (this.props.surveys[i].category === this.state.category)
+                else if (this.props.surveys[userCompletedSurveys[i].indexOfSurvey].category === this.state.category)
                     this.pushNewLinkToSurveysArr(surveysArr, userCompletedSurveys[i].indexOfSurvey);
-
-
             }
         }
         return surveysArr;

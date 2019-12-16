@@ -18,6 +18,7 @@ import './cssFiles/userPage.css';
 import './cssFiles/surveyPage.css';
 import './cssFiles/createPageStyle.css';
 import './cssFiles/editSurveysStyle.css';
+import './cssFiles/assignCategoriesStyle.css';
 import *  as ROUTES from './constants/routes';
 import { User, Survey, Question } from './classes/classes.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -30,9 +31,9 @@ export default class App extends Component {
 
     this.state = {
       users: [
-        new User('tomer', 'Tomer', 'Steiner', '1234', 'aaaa@gmail.com', 'User'),
-        new User('ram', 'Ram', 'Maian', '4321', 'bbbb@walla.com', 'User'),
-        new User('jon', 'Jon', 'Snow', '1111', 'cccc@gmail.com', 'Admin')
+        new User('tomer', 'Tomer', 'Steiner', '1234', 'aaaa@gmail.com', 'User', ['Bathroom']),
+        new User('ram', 'Ram', 'Maian', '4321', 'bbbb@walla.com', 'User', ['Bedroom', 'Bathroom']),
+        new User('jon', 'Jon', 'Snow', '1111', 'cccc@gmail.com', 'Admin', ['Bedroom', 'Bathroom'])
       ],
 
       surveys: [
@@ -52,6 +53,12 @@ export default class App extends Component {
 
       categories: ['Bedroom', 'Bathroom']
     }
+  }
+
+  updateAssignedCategories = (tempCategoriesArr, indexSelectedUser) => {
+    let tempUsers = this.state.users;
+    tempUsers[indexSelectedUser].assignedCategories = tempCategoriesArr;
+    this.setState({ users: tempUsers });
   }
 
   updateSurvey = (updatedSurvey, surveyIndex) => {
@@ -79,6 +86,13 @@ export default class App extends Component {
     let tempUsers = this.state.users;
     tempUsers[loggedUserIndex].completedSurveys.push({ indexOfSurvey: indexSurvey, resultSurvey: checkedSurvey, couponRedeemed: false });
     this.setState({ users: tempUsers });
+  }
+
+  findUserbyUserName = (userName) => {
+    for (let i = 0; i < this.state.users.length; i++)
+      if (this.state.users[i].user === userName)
+        return i;
+    return -1;
   }
 
   findSurveyIdInCompletedArr = (surveyId) => {
@@ -115,10 +129,10 @@ export default class App extends Component {
             <Route exact path={ROUTES.COUPONPAGE} render={(props) => <CouponPage {...props} users={this.state.users} />} />
             <Route exact path={ROUTES.ADMIN} render={(props) => <AdminPage {...props} users={this.state.users} />} />
             <Route exact path={ROUTES.NEW_CATEGORY} render={(props) => <NewCategory {...props} addNewCategory={this.addNewCategory} />} />
-            <Route exact path={ROUTES.ADMIN_EDIT_USERS} render={(props) => <AdminEditUsers {...props} users={this.state.users} updateUser={this.updateUser} />} />
+            <Route exact path={ROUTES.ADMIN_EDIT_USERS} render={(props) => <AdminEditUsers {...props} users={this.state.users} updateUser={this.updateUser} findUserbyUserName={this.findUserbyUserName} />} />
             <Route exact path={ROUTES.CREATESURVEY} render={(props) => <CreateSurveyPage {...props} surveys={this.state.surveys} categories={this.state.categories} addSurvey={this.addSurvey} />} />
             <Route exact path={ROUTES.EDITSURVEY} render={(props) => <EditSurveyPage {...props} surveys={this.state.surveys} categories={this.state.categories} deleteSurvey={this.deleteSurvey} updateSurvey={this.updateSurvey} />} />
-            <Route exact path={ROUTES.ASSIGN_CATEGORIES} render={(props) => <AssignCategories {...props} users={this.state.users} categories={this.state.categories} />} />
+            <Route exact path={ROUTES.ASSIGN_CATEGORIES} render={(props) => <AssignCategories {...props} users={this.state.users} categories={this.state.categories} findUserbyUserName={this.findUserbyUserName} updateAssignedCategories={this.updateAssignedCategories} />} />
           </Switch>
 
         </Router>

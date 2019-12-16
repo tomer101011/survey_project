@@ -79,7 +79,7 @@ export default class AdminEditUsers extends Component {
 
     loadUserInfo = () => {
         let userName = document.getElementById("usersDropdown").value;
-        this.setState({ userIndex: this.findUserbyUserName(userName) }, () => this.addDataToUserInfo());
+        this.setState({ userIndex: this.props.findUserbyUserName(userName) }, () => this.addDataToUserInfo());
     }
 
     addDataToUserInfo = () => {
@@ -99,15 +99,6 @@ export default class AdminEditUsers extends Component {
         document.getElementById("mail").style.border = "none";
 
         this.setState({ userName: tempUserName, firstName: tempFirstName, lastName: tempLastName, mail: tempMail });
-    }
-
-
-
-    findUserbyUserName = (userName) => {
-        for (let i = 0; i < this.props.users.length; i++)
-            if (this.props.users[i].user === userName)
-                return i;
-        return -1;
     }
 
     updateUser = () => {
