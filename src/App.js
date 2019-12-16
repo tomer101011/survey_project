@@ -31,7 +31,7 @@ export default class App extends Component {
 
     this.state = {
       users: [
-        new User('tomer', 'Tomer', 'Steiner', '1234', 'aaaa@gmail.com', 'User', ['Bathroom']),
+        new User('tomer', 'Tomer', 'Steiner', '1234', 'aaaa@gmail.com', 'User', ['Bedroom', 'Bathroom']),
         new User('ram', 'Ram', 'Maian', '4321', 'bbbb@walla.com', 'User', ['Bedroom', 'Bathroom']),
         new User('jon', 'Jon', 'Snow', '1111', 'cccc@gmail.com', 'Admin', ['Bedroom', 'Bathroom'])
       ],
