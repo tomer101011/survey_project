@@ -68,6 +68,7 @@ export default class AdminEditUsers extends Component {
         )
     }
 
+    //load to dropdown the user names (not first names)
     loadUsersDropdown = () => {
         return (
             <select id="usersDropdown" onChange={() => this.loadUserInfo()}>
@@ -77,11 +78,13 @@ export default class AdminEditUsers extends Component {
         );
     }
 
+    //set the index of the chosen user from dropdown and then load the user to inputs
     loadUserInfo = () => {
         let userName = document.getElementById("usersDropdown").value;
         this.setState({ userIndex: this.props.findUserbyUserName(userName) }, () => this.addDataToUserInfo());
     }
 
+    //load the info of a user to input tags based on the dropdown value
     addDataToUserInfo = () => {
         let tempUserName = this.props.users[this.state.userIndex].user;
         let tempFirstName = this.props.users[this.state.userIndex].firstName;
@@ -101,16 +104,19 @@ export default class AdminEditUsers extends Component {
         this.setState({ userName: tempUserName, firstName: tempFirstName, lastName: tempLastName, mail: tempMail });
     }
 
+    //update the user info based on input values
     updateUser = () => {
         if (document.getElementById("usersDropdown").value === "Choose User")
             alert("You need to choose a user");
 
+        //if the inputs are not blank, then update user
         else if (!this.areInputsBlank()) {
             this.props.updateUser(this.state.userIndex, this.state.userName, this.state.firstName, this.state.lastName, this.state.mail);
             alert("User info changed successfully!");
         }
     }
 
+    //redirect to another page
     doRedirect = () => {
         if (this.state.changePage)
             return <Redirect to={this.state.path} />
@@ -136,6 +142,7 @@ export default class AdminEditUsers extends Component {
         this.setState({ mail: e.target.value });
     }
 
+    //check if the inputs are blank and if they are mark them with red border
     areInputsBlank = () => {
         let someAreBlank = false;
 

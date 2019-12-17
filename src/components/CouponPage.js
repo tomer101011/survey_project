@@ -36,8 +36,11 @@ export default class CouponPage extends Component {
         )
     }
 
+    //load the coupons to the screen
     loadCoupons = () => {
         let couponsArr = this.addCoupons();
+
+        //if there are no coupons then show a message
         if (couponsArr.length === 0) {
             return (
                 <div className="row">
@@ -51,9 +54,12 @@ export default class CouponPage extends Component {
             return couponsArr.map(coupon => { return coupon });
     }
 
+    //return a coupons HTML array that has all the coupons of the user
     addCoupons = () => {
         let couponsArr = [];
         for (let i = 0; i < this.props.users[this.state.loggedUserIndex].completedSurveys.length; i++) {
+
+            //if the user redeemed the coupon then return it as unclickable
             if (this.props.users[this.state.loggedUserIndex].completedSurveys[i].couponRedeemed) {
                 couponsArr.push(
                     <div key={i} className="row">
@@ -63,6 +69,8 @@ export default class CouponPage extends Component {
                     </div>
                 );
             }
+
+            //else return the coupon as clickable
             else {
                 couponsArr.push(
                     <div key={i} className="row">
@@ -76,7 +84,9 @@ export default class CouponPage extends Component {
         return couponsArr;
     }
 
+    //redeem the coupon
     redeemCoupon = (i) => {
+        //change the coupon state to redeemed and change it's style
         this.props.users[this.state.loggedUserIndex].completedSurveys[i].couponRedeemed = true;
         document.getElementById('a' + i).disabled = true;
         document.getElementById('a' + i).innerHTML = "Survey " + (this.props.users[this.state.loggedUserIndex].completedSurveys[i].indexOfSurvey + 1) + " redeemed !"
@@ -84,12 +94,13 @@ export default class CouponPage extends Component {
         document.getElementById('a' + i).style.color = "white";
     }
 
-    changePathToGo = (newPath) => {
-        this.setState({ path: newPath, changePage: true });
-    }
-
+    //redirect to another page
     doRedirect = () => {
         if (this.state.changePage)
             return <Redirect to={this.state.path} />
+    }
+
+    changePathToGo = (newPath) => {
+        this.setState({ path: newPath, changePage: true });
     }
 }

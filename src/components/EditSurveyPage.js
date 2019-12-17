@@ -52,8 +52,9 @@ export default class EditSurveyPage extends Component {
         )
     }
 
+    //add buttons to the screen if the user selected a survey to edit
     addUpdateButton = () => {
-        if (this.state.questionArr.length !== 0)
+        if (this.state.surveyIndexSelected !== -1)
             return (
                 <div className="row">
                     <div className="col-12">
@@ -67,36 +68,55 @@ export default class EditSurveyPage extends Component {
 
     }
 
+    //update the survey
     updateSurvey = () => {
+        //all inputs have placeholders to the original survey inputs
+        //if the admin doesn't want to update certain inputs
+        //then he can leave them blank and the placeholder value will be taken instead
         let tempSurvey = this.props.surveys[this.state.surveyIndexSelected];
 
         let tempSurveyName = document.getElementById('nameOfSurvey').value;
+
+        //if the new survey name is not blank, then the new survey name will be taken
         if (tempSurveyName !== '')
             tempSurvey.name = tempSurveyName;
 
+        //walk through all questions
         for (let i = 0; i < this.props.surveys[this.state.surveyIndexSelected].questions.length; i++) {
             let tempQuestionName = document.getElementById('a' + i).value;
+
+            //if the new question name is not blank, then the new question name will be taken
             if (tempQuestionName !== '')
                 tempSurvey.questions[i].question = tempQuestionName;
 
+            //walk through all answers of a question
             for (let j = 0; j < this.props.surveys[this.state.surveyIndexSelected].questions[i].answers.length; j++) {
                 let tempAnswerName = document.getElementById('a' + i + j).value;
+
+                //if the new answer name is not blank, then the new answer name will be taken
                 if (tempAnswerName !== '')
                     tempSurvey.questions[i].answers[j] = tempAnswerName;
             }
         }
+
+        //update the survey
         this.props.updateSurvey(tempSurvey, this.state.surveyIndexSelected);
+
+        //change states back to default so the admin can update/delete another survey
         this.setState({ questionArr: [], surveyIndexSelected: -1 })
         alert("Survey updated successfully!");
     }
 
+    //delete a survey
     deleteSurvey = () => {
         if (window.confirm('Do you want to delete the survey?')) {
             this.props.deleteSurvey(this.state.surveyIndexSelected);
+            //change states back to default so the admin can update/delete another survey
             this.setState({ questionArr: [], surveyIndexSelected: -1 });
         }
     }
 
+    //return a div that contains the name of the survey
     loadSelectedSurveyName = () => {
         if (this.state.surveyIndexSelected !== -1)
             return (
@@ -108,11 +128,16 @@ export default class EditSurveyPage extends Component {
             );
     }
 
+    //load questions to questionArr HTML array state
     loadQuestionsToArr = (surveyIndex) => {
         let tempQuestionsArr = [];
+
+        //walk through all questions of the selected survey
         for (let i = 0; i < this.props.surveys[surveyIndex].questions.length; i++) {
+            //answers array HTML that contains rows of answers
             let tempAnswersArr = [];
 
+            //walk through all answers of the question
             for (let j = 0; j < this.props.surveys[surveyIndex].questions[i].answers.length; j++) {
                 let answer = this.props.surveys[surveyIndex].questions[i].answers[j];
                 tempAnswersArr.push(
@@ -135,10 +160,12 @@ export default class EditSurveyPage extends Component {
                 </div>
             );
         }
+        //clear inputs of previous selected survey
         this.clearInputs();
         this.setState({ questionArr: tempQuestionsArr, surveyIndexSelected: surveyIndex });
     }
 
+    //clear all inputs
     clearInputs = () => {
         let inputs = document.getElementsByTagName('input');
         for (let i = 0; i < inputs.length; i++) {
@@ -146,20 +173,26 @@ export default class EditSurveyPage extends Component {
         }
     }
 
+    //load surveys to the screen
     loadSurveyData = () => {
-        if (this.state.questionArr.length === 0)
+        //if no survey selected then a message will be shown
+        if (this.state.surveyIndexSelected === -1)
             return (<h1 className="header-style marginText">Choose a survey to edit</h1>);
 
+        //else show the built survey HTML to the screen
         else return this.state.questionArr.map(question => { return question });
     }
 
+    //load survey names links to the screen
     loadSurveysNames = (category) => {
         let surveysArr = [];
         for (let i = 0; i < this.props.surveys.length; i++) {
+            //if the survey is not deleted
             if (!this.props.surveys[i].deleted) {
                 if (category === 'All Categories')
                     this.pushNewLinkToSurveysArr(surveysArr, i);
 
+                //show survey name link of a chosen category
                 else if (this.props.surveys[i].category === category)
                     this.pushNewLinkToSurveysArr(surveysArr, i);
             }
@@ -167,6 +200,7 @@ export default class EditSurveyPage extends Component {
         return surveysArr;
     }
 
+    //push to surveyArr HTML a survey name link
     pushNewLinkToSurveysArr = (surveysArr, surveyIndex) => {
         surveysArr.push(
             <div key={surveyIndex} className="row">
@@ -177,6 +211,7 @@ export default class EditSurveyPage extends Component {
         );
     }
 
+    //load categories to dropdown
     loadCategories = () => {
         return (
             <select id="category" onChange={() => this.searchSurveyByCategory()}>
@@ -186,17 +221,19 @@ export default class EditSurveyPage extends Component {
         );
     }
 
+    //change category state to chosen dropdown category and render again to load survey name links
     searchSurveyByCategory = () => {
         let inputCategory = document.getElementById("category").value;
         this.setState({ category: inputCategory });
     }
 
-    changePathToGo = (newPath) => {
-        this.setState({ path: newPath, changePage: true });
-    }
-
+    //redirect to another page
     doRedirect = () => {
         if (this.state.changePage)
             return <Redirect to={this.state.path} />
+    }
+
+    changePathToGo = (newPath) => {
+        this.setState({ path: newPath, changePage: true });
     }
 }

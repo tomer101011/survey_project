@@ -73,6 +73,7 @@ export default class UserPage extends Component {
         )
     }
 
+    //redirect to another page
     doRedirect = () => {
         if (this.state.changePage)
             return <Redirect to={this.state.path} />
@@ -82,6 +83,8 @@ export default class UserPage extends Component {
         this.setState({ path: newPath, changePage: true });
     }
 
+    //redirect to All surveys page and send a string
+    //if you want to see the available surveys or completed ones
     goToAvailableCompletedSurveys = (whereToGo) => {
         if (whereToGo === 'available')
             localStorage.setItem('whereToGo', 'available');

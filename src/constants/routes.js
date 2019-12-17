@@ -1,3 +1,4 @@
+//All routes to the pages
 export const LOGIN = '/';
 export const USER = '/user';
 export const ADMIN = '/admin';

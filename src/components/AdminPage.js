@@ -83,6 +83,7 @@ export default class AdminPage extends Component {
         )
     }
 
+    //redirect to another page
     doRedirect = () => {
         if (this.state.changePage)
             return <Redirect to={this.state.path} />

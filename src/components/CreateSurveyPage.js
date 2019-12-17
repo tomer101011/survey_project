@@ -71,19 +71,26 @@ export default class CreateSurveyPage extends Component {
         )
     }
 
+    //add the new survey
     submitSurvey = () => {
+        //if the survey name input is blank
         if (this.state.surveyName === '')
             document.getElementById("surveyName").style.border = "2px solid red";
 
         else {
             document.getElementById("surveyName").style.border = "none";
             let category = document.getElementById("category").value;
+
+            //if the admin didn't choose a category
             if (category === "Choose Category")
                 alert("You need to choose a category");
 
+            //if the admin didn't add any questions
             else if (this.state.questionArr.length === 0)
                 alert("You didn't add any questions to the survey");
 
+            //the admin chose a category and added question/s that has answers already
+            //No need to check here if the questions have answers because it will be checked on addQuestion function
             else {
                 let newSurveyId;
                 if (this.props.length === 0)
@@ -95,46 +102,59 @@ export default class CreateSurveyPage extends Component {
                 this.props.addSurvey(survey);
                 document.getElementById("surveyName").value = "";
                 alert("Survey added successfully!");
+
+                //change states to default ones so the admin can add more surveys
                 this.setState({ surveyName: "", questionArr: [] });
             }
 
         }
     }
 
+    //add question to the questions array
     addQuestion = () => {
+        //if the question name input is blank
         if (this.state.questionName === '')
             document.getElementById("questionName").style.border = "2px solid red";
 
         else {
             document.getElementById("questionName").style.border = "1px solid #ced4da";
+
+            //if the admin added less then 2 answers to the question
             if (this.state.answerArr.length <= 1)
                 alert("You need to add minimum 2 answers to the question");
 
+            //else the admin added 2 answers or more to the question
             else {
                 let question = new Question(this.state.questionName, this.state.answerArr);
                 let tempQuestionArr = this.state.questionArr;
                 tempQuestionArr.push(question);
                 document.getElementById("questionName").value = "";
                 alert("Question added with answers!")
+                //set the states of answers array and question name back to default to add more questions
                 this.setState({ questionArr: tempQuestionArr, questionName: "", answerArr: [] });
             }
         }
     }
 
+    //add answer to the answer array
     addAnswer = () => {
+        //if the answer name input is blank
         if (this.state.answerName === '')
             document.getElementById("answerName").style.border = "2px solid red";
 
+        //else push the answer to answer array
         else {
             document.getElementById("answerName").style.border = "none";
             let tempAnswerArr = this.state.answerArr;
             tempAnswerArr.push(this.state.answerName);
             document.getElementById("answerName").value = "";
-            alert("Answer added!")
+            alert("Answer added!");
+            //set the state of answer name back to default to add more answers;
             this.setState({ answerArr: tempAnswerArr, answerName: "" });
         }
     }
 
+    //load categories to dropdown
     loadCategories = () => {
         return (
             <select id="category">
@@ -156,13 +176,12 @@ export default class CreateSurveyPage extends Component {
         this.setState({ answerName: e.target.value });
     }
 
-    changePathToGo = (newPath) => {
-        this.setState({ path: newPath, changePage: true });
-    }
-
+    //redirect to another page
     doRedirect = () => {
         if (this.state.changePage)
             return <Redirect to={this.state.path} />
     }
-
+    changePathToGo = (newPath) => {
+        this.setState({ path: newPath, changePage: true });
+    }
 }

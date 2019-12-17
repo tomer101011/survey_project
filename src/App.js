@@ -29,50 +29,55 @@ export default class App extends Component {
   constructor(props) {
     super(props);
 
+    //all the users, surveys, categories
     this.state = {
       users: [
-        new User('tomer', 'Tomer', 'Steiner', '1234', 'aaaa@gmail.com', 'User', ['Bedroom', 'Bathroom']),
-        new User('ram', 'Ram', 'Maian', '4321', 'bbbb@walla.com', 'User', ['Bedroom', 'Bathroom']),
-        new User('jon', 'Jon', 'Snow', '1111', 'cccc@gmail.com', 'Admin', ['Bedroom', 'Bathroom'])
+        new User('tomer', 'Tomer', 'Steiner', '1234', 'aaaa@gmail.com', 'User', ['Music', 'Sport']),
+        new User('ram', 'Ram', 'Maian', '4321', 'bbbb@walla.com', 'User', ['Music', 'Sport']),
+        new User('jon', 'Jon', 'Snow', '1111', 'cccc@gmail.com', 'Admin', ['Music', 'Sport'])
       ],
 
       surveys: [
-        new Survey(0, 'bla bla', 'Bedroom',
-          [new Question('are this better?', ['one', 'two', 'three']),
-          new Question('bb', ['a', 'b', 'c']),
-          new Question('ccc', ['d', 'e', 'f'])])
+        new Survey(0, 'Basketball', 'Sport',
+          [new Question('Do you like this sport?', ['Very much', 'I do but not a lot', 'Not at all']),
+          new Question('Do you know the rules?', ['Yes', 'No']),
+          new Question('Would you recommend someone to watch a game?', ['Yes I would', 'Maybe', 'No I wouldn\'t'])])
         ,
-        new Survey(1, 'ma ma', 'Bathroom',
-          [new Question('is this good?', ['four', 'five', 'six'])])
+        new Survey(1, 'Queen band', 'Music',
+          [new Question('Do you know their songs?', ['I know every song they made', 'I know some but not all', 'I am not familiar with their songs'])])
         ,
-        new Survey(2, 'na na', 'Bedroom',
-          [new Question('What is this?', ['seven', 'eight', 'nine']),
-          new Question('bb', ['4', '5', '6']),
-          new Question('ccc', ['1', '2', '3'])])
+        new Survey(2, 'Music in general', 'Music',
+          [new Question('Do you hear music often?', ['Every time', 'Sometimes', 'Rarely']),
+          new Question('Are you proficient in the music industry', ['Yep, I am', 'Nope, I am not']),
+          new Question('In what types of headphones do you like to hear music?', ['In ear', 'On ear', 'Around ear'])])
       ],
 
-      categories: ['Bedroom', 'Bathroom']
+      categories: ['Music', 'Sport']
     }
   }
 
+  //get a categories array and update the assigned categories of a user to that array
   updateAssignedCategories = (tempCategoriesArr, indexSelectedUser) => {
     let tempUsers = this.state.users;
     tempUsers[indexSelectedUser].assignedCategories = tempCategoriesArr;
     this.setState({ users: tempUsers });
   }
 
+  //get the updated survey and the index of the survey you want to update to and update it
   updateSurvey = (updatedSurvey, surveyIndex) => {
     let tempSurveys = this.state.surveys;
     tempSurveys[surveyIndex] = updatedSurvey;
     this.setState({ surveys: tempSurveys });
   }
 
+  //get a survey index and the delete it
   deleteSurvey = (surveyIndex) => {
     let tempSurveys = this.state.surveys;
     tempSurveys[surveyIndex].deleted = true;
     this.setState({ surveys: tempSurveys });
   }
 
+  //update a user
   updateUser = (indexUser, userName, firstName, lastName, mail) => {
     let tempUsers = this.state.users;
     tempUsers[indexUser].user = userName;
@@ -82,12 +87,14 @@ export default class App extends Component {
     this.setState({ users: tempUsers });
   }
 
+  //change the completed survey of a user to checkedSurvey(the one the function gets)
   pushCompletedSurvey = (checkedSurvey, loggedUserIndex, indexSurvey) => {
     let tempUsers = this.state.users;
     tempUsers[loggedUserIndex].completedSurveys.push({ indexOfSurvey: indexSurvey, resultSurvey: checkedSurvey, couponRedeemed: false });
     this.setState({ users: tempUsers });
   }
 
+  //return the index of a user given his user name or '-1' if not found
   findUserbyUserName = (userName) => {
     for (let i = 0; i < this.state.users.length; i++)
       if (this.state.users[i].user === userName)
@@ -95,6 +102,7 @@ export default class App extends Component {
     return -1;
   }
 
+  //return the index of a survey given his survey id or '-1' if the survey not found
   findSurveyIdInCompletedArr = (surveyId) => {
     let loggedUserIndex = localStorage.getItem('loggedUserIndex');
     for (let i = 0; i < this.state.users[loggedUserIndex].completedSurveys.length; i++)
@@ -103,12 +111,14 @@ export default class App extends Component {
     return -1;
   }
 
+  //add a new category to categories array
   addNewCategory = (newCategory) => {
     let tempCategories = this.state.categories;
     tempCategories.push(newCategory);
     this.setState({ categories: tempCategories });
   }
 
+  //add a new survey to surveys array
   addSurvey = (survey) => {
     let tempSurveys = this.state.surveys;
     tempSurveys.push(survey);
@@ -120,6 +130,7 @@ export default class App extends Component {
       <div>
         <Router>
 
+          {/* all routing pages */}
           <Switch>
             <Route exact path={ROUTES.LOGIN} render={(props) => <LoginPage {...props} users={this.state.users} />} />
             <Route exact path={ROUTES.USER} render={(props) => <UserPage {...props} users={this.state.users} />} />

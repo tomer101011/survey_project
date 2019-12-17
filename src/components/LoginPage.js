@@ -17,7 +17,7 @@ export default class LoginPage extends Component {
     render() {
         return (
             <div className="container">
-                {this.redirectToUserPage()}
+                {this.redirectToPage()}
                 <div id="box" className="row loginSheet">
                     <div className="col-12">
                         <div className="row">
@@ -59,11 +59,13 @@ export default class LoginPage extends Component {
         this.setState({ password: e.target.value });
     }
 
-    redirectToUserPage = () => {
+    //redirect to another user page
+    redirectToPage = () => {
         if (this.state.isLoggedIn)
             return <Redirect to={this.state.path} />
     }
 
+    //return true or false if the inputs are blank and if they are then style them
     areInputsBlank = () => {
         let someAreBlank = false;
 
@@ -84,10 +86,15 @@ export default class LoginPage extends Component {
         return someAreBlank;
     }
 
+    //login to page
     login = () => {
+
+        //if inputs are not blank
         if (!this.areInputsBlank()) {
+            //find the user based on user name and password
             let foundUserIndex = this.findUser();
             let whereToGo = '';
+            //if the user was found (correct credentials) then go to another page based on it's role
             if (foundUserIndex !== -1) {
                 if (this.props.users[foundUserIndex].role === 'User')
                     whereToGo = ROUTES.USER;
@@ -102,6 +109,7 @@ export default class LoginPage extends Component {
         }
 
     }
+    //find the user based on user name and password
     findUser = () => {
         let usersArr = this.props.users;
         for (let i = 0; i < usersArr.length; i++) {

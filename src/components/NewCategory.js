@@ -44,6 +44,7 @@ export default class NewCategory extends Component {
         )
     }
 
+    //return true or false if the inputs are blank and if they are then style them
     areInputsBlank = () => {
         let someAreBlank = false;
 
@@ -57,6 +58,7 @@ export default class NewCategory extends Component {
         return someAreBlank;
     }
 
+    //add a new category to category array
     addNewCategory = () => {
         if (!this.areInputsBlank()) {
             this.props.addNewCategory(this.state.newCategory);
@@ -69,6 +71,7 @@ export default class NewCategory extends Component {
         this.setState({ newCategory: e.target.value });
     }
 
+    //redirect to another page
     doRedirect = () => {
         if (this.state.changePage)
             return <Redirect to={this.state.path} />

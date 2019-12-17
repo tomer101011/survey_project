@@ -1,12 +1,12 @@
 export class User {
-    user;
+    user;// user name
     firstName;
     lastName;
     password;
     mail;
-    role;
+    role;//user type: User or Admin
     completedSurveys = []; // Ids of completed surveys
-    assignedCategories;
+    assignedCategories = [];// assigned categories names array
 
     constructor(user, firstName, lastName, password, mail, role, assignedCategories) {
         this.user = user;

@@ -6,7 +6,7 @@ export default class AssignCategories extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            dropSelectedUser: "Choose User",
+            dropSelectedUser: "Choose User",//dropdown selected user
             path: "",
             changePage: false
         }
@@ -49,23 +49,35 @@ export default class AssignCategories extends Component {
         )
     }
 
+    //Show button only if the admin selected a user
     addAssignButton = () => {
         if (this.state.dropSelectedUser !== 'Choose User')
-            return (<button style={{ marginTop: "10px" }} onClick={() => this.assignCategories()} className="btn btn-info">Assign Categories</button>);
+            return (<button style={{ marginTop: "10px" }} onClick={() => this.assignCategories()} className="btn btn-info">Assign Categories to {this.state.dropSelectedUser}</button>);
     }
 
+    //Assign categories to the chosen user
     assignCategories = () => {
+        //temp category names array
         let tempCategoriesArr = [];
+
+        //go through all of the categories
         for (let i = 0; i < this.props.categories.length; i++) {
+            //if the corresponding checkbox is checked, then push to array the name of the category
             if (document.getElementById('c' + i).checked)
                 tempCategoriesArr.push(document.getElementById('n' + i).innerHTML);
         }
+
+        //find the index of the user based on the chosen user name
         let indexSelectedUser = this.props.findUserbyUserName(this.state.dropSelectedUser);
+
+        //update the user's assigned categories the new categories
         this.props.updateAssignedCategories(tempCategoriesArr, indexSelectedUser);
-        alert('User assigned new categories successfully!');
+        alert('Assigned new categories to ' + this.state.dropSelectedUser + ' successfully!');
     }
 
+    //load categories with checkbox to the screen
     loadCategories = () => {
+        //if the admin didn't choose any user, then a message will be shown
         if (this.state.dropSelectedUser === 'Choose User')
             return (<h1 className="header-style">Choose a user to assign categories</h1>);
 
@@ -80,12 +92,13 @@ export default class AssignCategories extends Component {
             );
     }
 
+    //return an HTML array that has all categories with checkbox
     addCategories = () => {
         let categoriesArr = [];
         for (let i = 0; i < this.props.categories.length; i++) {
             categoriesArr.push(
                 <tr key={i}>
-                    <td className="padding-table"><input id={"c" + i} type="checkbox" /></td>
+                    <td className="padding-table pad-checkbox"><input id={"c" + i} type="checkbox" /></td>
                     <td><h4 id={"n" + i} className="autoBr">{this.props.categories[i]}</h4></td>
                 </tr>
             );
@@ -93,7 +106,9 @@ export default class AssignCategories extends Component {
         return categoriesArr;
     }
 
+    //load the dropdown with all users except the admin
     loadUsersDropdown = () => {
+
         let usersOnlyArr = this.props.users.filter((person) => person.role === 'User');
         return (
             <select id="usersDropdown" onChange={() => this.setDropSelectedUser()}>
@@ -108,6 +123,7 @@ export default class AssignCategories extends Component {
             document.getElementById("c" + i).checked = false;
     }
 
+    //get the chosen user and put it in a state
     setDropSelectedUser = () => {
         if (this.state.dropSelectedUser !== 'Choose User')
             this.clearCheckboxes();
@@ -115,6 +131,7 @@ export default class AssignCategories extends Component {
         this.setState({ dropSelectedUser: document.getElementById("usersDropdown").value });
     }
 
+    //redirect to another page
     doRedirect = () => {
         if (this.state.changePage)
             return <Redirect to={this.state.path} />

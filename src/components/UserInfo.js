@@ -63,6 +63,7 @@ export default class UserInfo extends Component {
         )
     }
 
+    //redirect to user page
     redirectToUserPage = () => {
         if (this.state.done)
             return <Redirect to={ROUTES.USER} />
@@ -84,6 +85,7 @@ export default class UserInfo extends Component {
         this.setState({ mail: e.target.value });
     }
 
+    //check if the inputs are blank and if they are mark them with red border
     areInputsBlank = () => {
         let someAreBlank = false;
 
@@ -118,6 +120,7 @@ export default class UserInfo extends Component {
         return someAreBlank;
     }
 
+    //update the user
     updateUser = () => {
         if (!this.areInputsBlank()) {
             this.props.updateUser(this.state.loggedUserIndex, this.state.userName, this.state.firstName, this.state.lastName, this.state.mail);
